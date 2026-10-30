@@ -1,0 +1,19 @@
+# Render Blueprint: frontend and API share a single public HTTPS service.
+# Connect the GitHub repository containing these files, then create a Blueprint.
+services:
+  - type: web
+    name: zhiwu-product-strategy
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: STRATEGY_MODEL
+        value: gpt-4o-mini
+      - key: STRATEGY_BASE_URL
+        value: https://api.openai.com/v1
